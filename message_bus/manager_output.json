@@ -1,0 +1,27 @@
+{
+  "skill": "manager-handoff",
+  "status": "success",
+  "employee_id": "EMP-F01FBEA4",
+  "full_name": "Geesh Mamidi",
+  "onboarding_complete": true,
+  "completed_at": "2026-06-26T14:30:58.084929",
+  "summary": {
+    "hr_record_created": true,
+    "accounts_provisioned": [
+      "email",
+      "github",
+      "slack",
+      "licenses"
+    ],
+    "courses_assigned": 8,
+    "calendar_events_created": 5,
+    "manager_briefing_sent": true,
+    "team_notified": true
+  },
+  "next_actions": [
+    "Block 30 minutes on 2026-07-10 morning for a personal welcome with Geesh Mamidi",
+    "Share the team's current sprint board and assign a first low-risk ticket by Day 3",
+    "Schedule a skip-level intro with your manager within the first two weeks"
+  ],
+  "error": null
+}

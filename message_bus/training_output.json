@@ -1,0 +1,63 @@
+{
+  "skill": "training-assignment",
+  "status": "success",
+  "employee_id": "EMP-F01FBEA4",
+  "courses_assigned": [
+    {
+      "course_id": "COMP-001",
+      "deadline": "2026-07-13"
+    },
+    {
+      "course_id": "COMP-002",
+      "deadline": "2026-07-15"
+    },
+    {
+      "course_id": "COMP-003",
+      "deadline": "2026-07-15"
+    },
+    {
+      "course_id": "COMP-004",
+      "deadline": "2026-07-17"
+    },
+    {
+      "course_id": "ENG-101",
+      "deadline": "2026-07-20"
+    },
+    {
+      "course_id": "ENG-102",
+      "deadline": "2026-07-23"
+    },
+    {
+      "course_id": "ENG-103",
+      "deadline": "2026-07-26"
+    },
+    {
+      "course_id": "ENG-201",
+      "deadline": "2026-07-29"
+    }
+  ],
+  "sessions_scheduled": [
+    {
+      "title": "Day-1 Company Welcome",
+      "date": "2026-07-10",
+      "duration_mins": 60
+    },
+    {
+      "title": "Week-1 Manager 1:1",
+      "date": "2026-07-13",
+      "duration_mins": 30
+    },
+    {
+      "title": "Technical Deep-Dive",
+      "date": "2026-07-20",
+      "duration_mins": 90
+    }
+  ],
+  "plan_email_sent": true,
+  "thirty_sixty_ninety_plan": {
+    "day_30": "Contribute to first PR and complete codebase orientation",
+    "day_60": "Own a feature end-to-end and pass code review independently",
+    "day_90": "Lead a sprint task and mentor an intern or new joiner"
+  },
+  "error": null
+}

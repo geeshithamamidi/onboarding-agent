@@ -1,0 +1,18 @@
+{
+  "skill": "hr-intake",
+  "status": "success",
+  "employee_id": "EMP-F01FBEA4",
+  "full_name": "Geesh Mamidi",
+  "role": "Software Engineer",
+  "department": "Engineering",
+  "start_date": "2026-07-10",
+  "corporate_email": "geesh.mamidi@company.com",
+  "documents_sent": [
+    "offer_acknowledgement",
+    "tax_w4",
+    "nda",
+    "benefits_enrollment"
+  ],
+  "documents_deadline": "2026-07-07",
+  "error": null
+}

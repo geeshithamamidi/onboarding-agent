@@ -1,0 +1,20 @@
+{
+  "pipeline_status": "complete",
+  "employee": {
+    "name": "Geesh Mamidi",
+    "role": "Software Engineer",
+    "department": "Engineering",
+    "start_date": "2026-07-10",
+    "corporate_email": "geesh.mamidi@company.com",
+    "employee_id": "EMP-F01FBEA4"
+  },
+  "steps_completed": [
+    "HR Intake",
+    "IT Provisioning",
+    "Training Assignment",
+    "Manager Handoff"
+  ],
+  "duration_seconds": 0.0,
+  "trajectory_events": 28,
+  "completed_at": "2026-06-26T14:30:58.085135"
+}

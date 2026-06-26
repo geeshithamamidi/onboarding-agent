@@ -1,0 +1,23 @@
+{
+  "skill": "it-provisioning",
+  "status": "success",
+  "employee_id": "EMP-F01FBEA4",
+  "corporate_email": "geesh.mamidi@company.com",
+  "github_username": "geesh-mamidi",
+  "slack_id": "UG4BOSW4G3",
+  "github_teams": [
+    "eng-general",
+    "product"
+  ],
+  "slack_channels": [
+    "#engineering",
+    "#general",
+    "#deploys"
+  ],
+  "licenses_assigned": [
+    "GitHub Pro",
+    "VSCode",
+    "Jira"
+  ],
+  "error": null
+}

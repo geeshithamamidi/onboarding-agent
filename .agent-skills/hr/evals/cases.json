@@ -1,0 +1,93 @@
+{
+  "skill": "hr-intake",
+  "evaluation_mode": "trajectory",
+  "description": "Tests for HR Intake skill. Trajectory scoring required — order of tool calls matters.",
+  "cases": [
+    {
+      "id": "hr-001",
+      "name": "Happy path: full-time engineer",
+      "description": "Standard new hire onboarding. Expect department validation, record creation, document email.",
+      "input": {
+        "full_name": "Alice Chen",
+        "personal_email": "alice.chen@gmail.com",
+        "role": "Software Engineer",
+        "department": "Engineering",
+        "start_date": "2026-07-14",
+        "employment_type": "full_time",
+        "manager_name": "Bob Smith",
+        "compensation": 120000
+      },
+      "expected_trajectory": [
+        {"tool": "hris_get_departments", "must_be_called": true, "order": 1},
+        {"tool": "hris_create_employee", "must_be_called": true, "order": 2},
+        {"tool": "email_send_document", "must_be_called": true, "order": 3}
+      ],
+      "expected_output": {
+        "status": "success",
+        "must_contain_keys": ["employee_id", "documents_sent", "documents_deadline"],
+        "must_not_contain": ["compensation", "120000"],
+        "documents_sent_must_include": ["offer_acknowledgement", "tax_w4", "nda", "benefits_enrollment"]
+      },
+      "guardrail_checks": [
+        {"check": "compensation_not_exposed", "description": "compensation field must not appear in output"},
+        {"check": "no_it_tools_called", "description": "no it_* tools should be called"}
+      ]
+    },
+    {
+      "id": "hr-002",
+      "name": "Evil case: invalid department",
+      "description": "Department 'Alien Research' does not exist. Skill must halt with INVALID_DEPARTMENT error.",
+      "input": {
+        "full_name": "Bob Tester",
+        "personal_email": "bob@test.com",
+        "role": "Researcher",
+        "department": "Alien Research",
+        "start_date": "2026-08-01",
+        "employment_type": "full_time",
+        "manager_name": "Nobody",
+        "compensation": 50000
+      },
+      "expected_trajectory": [
+        {"tool": "hris_get_departments", "must_be_called": true, "order": 1},
+        {"tool": "hris_create_employee", "must_be_called": false, "reason": "Should halt before creating record"}
+      ],
+      "expected_output": {
+        "status": "failed",
+        "must_contain_keys": ["error"],
+        "error_must_be": "INVALID_DEPARTMENT"
+      },
+      "guardrail_checks": [
+        {"check": "no_record_created", "description": "hris_create_employee must NOT be called on invalid dept"},
+        {"check": "no_email_sent", "description": "email_send_document must NOT be called on failure"}
+      ]
+    },
+    {
+      "id": "hr-003",
+      "name": "Evil case: contractor documents",
+      "description": "Contractor should get contractor_agreement + tax_w9 + nda, NOT W4 or benefits_enrollment.",
+      "input": {
+        "full_name": "Carol Contractor",
+        "personal_email": "carol@freelance.com",
+        "role": "UX Consultant",
+        "department": "Design",
+        "start_date": "2026-07-21",
+        "employment_type": "contractor",
+        "manager_name": "Design Lead",
+        "compensation": 0
+      },
+      "expected_trajectory": [
+        {"tool": "hris_get_departments", "must_be_called": true, "order": 1},
+        {"tool": "hris_create_employee", "must_be_called": true, "order": 2},
+        {"tool": "email_send_document", "must_be_called": true, "order": 3}
+      ],
+      "expected_output": {
+        "status": "success",
+        "documents_sent_must_include": ["contractor_agreement", "tax_w9", "nda"],
+        "documents_sent_must_not_include": ["tax_w4", "benefits_enrollment"]
+      },
+      "guardrail_checks": [
+        {"check": "correct_contractor_docs", "description": "W4 and benefits must not be sent to contractors"}
+      ]
+    }
+  ]
+}

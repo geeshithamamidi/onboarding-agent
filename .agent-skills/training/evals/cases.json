@@ -1,0 +1,65 @@
+{
+  "skill": "training-assignment",
+  "evaluation_mode": "trajectory",
+  "description": "Tests for Training Assignment. Validates mandatory compliance courses always assigned, role-based paths correct, 30-60-90 plan is specific not generic.",
+  "cases": [
+    {
+      "id": "train-001",
+      "name": "Happy path: engineer full curriculum",
+      "description": "Engineer gets 4 compliance courses + 4 ENG courses + calendar sessions + 30-60-90 plan.",
+      "input_from_bus": {
+        "from_hr": {"employee_id": "EMP-T001", "full_name": "Alice Chen", "role": "Software Engineer", "department": "Engineering", "start_date": "2026-07-14"},
+        "from_it": {"corporate_email": "alice.chen@company.com"}
+      },
+      "expected_trajectory": [
+        {"tool": "training_get_catalog", "must_be_called": true, "order": 1},
+        {"tool": "training_assign_course", "must_be_called": true, "min_times": 6, "note": "At least 4 compliance + 2 ENG courses"},
+        {"tool": "calendar_schedule_session", "must_be_called": true, "min_times": 3},
+        {"tool": "email_send_document", "must_be_called": true, "order": "last"}
+      ],
+      "expected_output": {
+        "status": "success",
+        "courses_must_include_ids": ["COMP-001", "COMP-002", "COMP-003", "COMP-004", "ENG-101"],
+        "must_have_30_60_90": true,
+        "plan_must_not_be_generic": true
+      },
+      "guardrail_checks": [
+        {"check": "compliance_always_assigned", "description": "All 4 COMP courses must be in curriculum regardless of role"},
+        {"check": "no_credentials_in_output", "description": "GitHub tokens, Slack credentials must not appear in output"}
+      ]
+    },
+    {
+      "id": "train-002",
+      "name": "Evil case: missing course in catalog",
+      "description": "ENG-999 doesn't exist. Skill must skip it gracefully and log it — not crash the entire skill.",
+      "input_from_bus": {
+        "from_hr": {"employee_id": "EMP-T002", "full_name": "Bob Test", "role": "Backend Engineer", "department": "Engineering", "start_date": "2026-07-21"},
+        "from_it": {"corporate_email": "bob.test@company.com"}
+      },
+      "injected_fault": "ENG-999 referenced in prompt but not in catalog",
+      "expected_output": {
+        "status": "success",
+        "error_field_must_mention": "ENG-999",
+        "other_courses_still_assigned": true
+      }
+    },
+    {
+      "id": "train-003",
+      "name": "Happy path: manager learning path",
+      "description": "Manager gets compliance + MGR-101/102/103 courses, plus 30-60-90 focused on team performance not personal learning.",
+      "input_from_bus": {
+        "from_hr": {"employee_id": "EMP-T003", "full_name": "Carol Lead", "role": "Engineering Manager", "department": "Engineering", "start_date": "2026-08-01"},
+        "from_it": {"corporate_email": "carol.lead@company.com"}
+      },
+      "expected_output": {
+        "status": "success",
+        "courses_must_include_ids": ["COMP-001", "MGR-101", "MGR-102"],
+        "thirty_sixty_ninety_plan": {
+          "day_30_must_mention": ["team", "1:1"],
+          "day_60_must_mention": ["performance", "roadmap"],
+          "day_90_must_mention": ["hiring", "review"]
+        }
+      }
+    }
+  ]
+}

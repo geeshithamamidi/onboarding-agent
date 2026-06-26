@@ -1,0 +1,149 @@
+{
+  "total_cases": 11,
+  "total_passed": 10,
+  "overall_pass_rate": 0.91,
+  "pass_to_k_5": 0.6209,
+  "production_ready": true,
+  "skill_results": {
+    "hr": {
+      "skill": "hr",
+      "cases_run": 2,
+      "cases_passed": 1,
+      "pass_rate": 0.5,
+      "average_score": 0.88,
+      "results": [
+        {
+          "case_id": "hr-001",
+          "case_name": "Happy path: full-time engineer",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        },
+        {
+          "case_id": "hr-003",
+          "case_name": "Evil case: contractor documents",
+          "trajectory_score": 1.0,
+          "output_score": 0.4,
+          "combined_score": 0.76,
+          "passed": false,
+          "issues": [
+            "MISSING DOCUMENT: 'contractor_agreement' not in documents_sent",
+            "MISSING DOCUMENT: 'tax_w9' not in documents_sent",
+            "WRONG DOCUMENT: 'tax_w4' should not be in documents_sent",
+            "WRONG DOCUMENT: 'benefits_enrollment' should not be in documents_sent"
+          ]
+        }
+      ]
+    },
+    "it": {
+      "skill": "it",
+      "cases_run": 3,
+      "cases_passed": 3,
+      "pass_rate": 1.0,
+      "average_score": 1.0,
+      "results": [
+        {
+          "case_id": "it-001",
+          "case_name": "Happy path: engineer provisioning",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        },
+        {
+          "case_id": "it-002",
+          "case_name": "Happy path: analyst provisioning",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        },
+        {
+          "case_id": "it-003",
+          "case_name": "Evil case: email conflict resolution",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        }
+      ]
+    },
+    "training": {
+      "skill": "training",
+      "cases_run": 3,
+      "cases_passed": 3,
+      "pass_rate": 1.0,
+      "average_score": 1.0,
+      "results": [
+        {
+          "case_id": "train-001",
+          "case_name": "Happy path: engineer full curriculum",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        },
+        {
+          "case_id": "train-002",
+          "case_name": "Evil case: missing course in catalog",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        },
+        {
+          "case_id": "train-003",
+          "case_name": "Happy path: manager learning path",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        }
+      ]
+    },
+    "manager": {
+      "skill": "manager",
+      "cases_run": 3,
+      "cases_passed": 3,
+      "pass_rate": 1.0,
+      "average_score": 1.0,
+      "results": [
+        {
+          "case_id": "mgr-001",
+          "case_name": "Happy path: complete handoff",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        },
+        {
+          "case_id": "mgr-002",
+          "case_name": "Evil case: sensitive data guardrail",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        },
+        {
+          "case_id": "mgr-003",
+          "case_name": "Happy path: next_actions quality check",
+          "trajectory_score": 1.0,
+          "output_score": 1.0,
+          "combined_score": 1.0,
+          "passed": true,
+          "issues": []
+        }
+      ]
+    }
+  }
+}

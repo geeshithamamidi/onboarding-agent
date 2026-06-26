@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Onboarding — A2UI Live Dashboard</title>
+<style>
+  :root {
+    --bg: #f8f9fa; --surface: #ffffff; --border: #e2e8f0;
+    --text: #1a202c; --muted: #718096; --accent: #3182ce;
+    --success: #38a169; --warning: #d69e2e; --danger: #e53e3e;
+    --pending: #a0aec0; --purple: #805ad5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         background: var(--bg); color: var(--text); padding: 24px; }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .metric { background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+            padding: 14px 16px; }
+  .metric .label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .metric .value { font-size: 26px; font-weight: 600; }
+  .metric .value.green { color: var(--success); }
+  .metric .value.blue { color: var(--accent); }
+  .metric .value.purple { color: var(--purple); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+          padding: 18px; margin-bottom: 16px; }
+  .card h2 { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+  .pipeline { display: flex; align-items: center; gap: 0; margin-bottom: 20px; }
+  .step { flex: 1; text-align: center; position: relative; }
+  .step-circle { width: 40px; height: 40px; border-radius: 50%; display: flex;
+                 align-items: center; justify-content: center; font-size: 16px;
+                 margin: 0 auto 6px; border: 2px solid var(--border);
+                 background: var(--surface); }
+  .step-circle.done { background: var(--success); border-color: var(--success); color: white; }
+  .step-circle.active { background: var(--accent); border-color: var(--accent); color: white; animation: pulse 1.5s infinite; }
+  .step-circle.pending { background: var(--surface); border-color: var(--border); color: var(--pending); }
+  .step-label { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .step-label.done { color: var(--success); }
+  .step-label.active { color: var(--accent); }
+  .connector { height: 2px; flex: 0.3; background: var(--border); margin-top: -22px; }
+  .connector.done { background: var(--success); }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity: 0.6; } }
+  .hire-card { display: flex; align-items: center; gap: 14px; padding: 14px;
+               border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px;
+               cursor: pointer; transition: border-color 0.15s; }
+  .hire-card:hover { border-color: var(--accent); }
+  .hire-card.selected { border-color: var(--accent); background: #ebf8ff; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent);
+            color: white; display: flex; align-items: center; justify-content: center;
+            font-weight: 600; font-size: 14px; flex-shrink: 0; }
+  .hire-info { flex: 1; }
+  .hire-name { font-weight: 600; font-size: 14px; }
+  .hire-role { font-size: 12px; color: var(--muted); }
+  .status-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+  .status-badge.complete { background: #c6f6d5; color: var(--success); }
+  .status-badge.active { background: #bee3f8; color: var(--accent); }
+  .status-badge.pending { background: #edf2f7; color: var(--muted); }
+  .timeline { list-style: none; padding: 0; }
+  .timeline li { display: flex; gap: 12px; padding: 10px 0;
+                 border-bottom: 1px solid var(--border); font-size: 13px; }
+  .timeline li:last-child { border-bottom: none; }
+  .tl-icon { width: 28px; height: 28px; border-radius: 50%; display: flex;
+             align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
+  .tl-icon.green { background: #c6f6d5; }
+  .tl-icon.blue { background: #bee3f8; }
+  .tl-icon.purple { background: #e9d8fd; }
+  .tl-icon.orange { background: #feebc8; }
+  .tl-content { flex: 1; }
+  .tl-title { font-weight: 500; }
+  .tl-time { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .tool-chip { display: inline-block; font-size: 11px; padding: 2px 8px;
+               background: #edf2f7; border-radius: 4px; margin: 2px; color: var(--muted);
+               font-family: monospace; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-size: 12px; color: var(--muted); font-weight: 500;
+       padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+  .tag.green { background: #c6f6d5; color: var(--success); }
+  .tag.red { background: #fed7d7; color: var(--danger); }
+  .score-bar { height: 6px; border-radius: 3px; background: #edf2f7; }
+  .score-fill { height: 6px; border-radius: 3px; }
+  select, button { border: 1px solid var(--border); border-radius: 6px;
+                   padding: 6px 12px; font-size: 13px; cursor: pointer;
+                   background: var(--surface); color: var(--text); }
+  button { background: var(--accent); color: white; border-color: var(--accent); }
+  button:hover { opacity: 0.9; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .grid-4 { grid-template-columns: repeat(2,1fr); }
+    .two-col { grid-template-columns: 1fr; } .pipeline { flex-wrap: wrap; } }
+</style>
+</head>
+<body>
+
+<h1>Employee Onboarding Orchestrator</h1>
+<p class="subtitle">A2UI Live Dashboard — Smart Employee Onboarding Agent | Kaggle Capstone 2026</p>
+
+<!-- Pipeline Overview -->
+<div class="card">
+  <h2>Active Pipeline — <span id="hire-name-title">Geesh Mamidi</span></h2>
+  <div class="pipeline" id="pipeline">
+    <div class="step">
+      <div class="step-circle done" id="step-hr">✓</div>
+      <div class="step-label done">HR Intake</div>
+    </div>
+    <div class="connector done" id="conn-1"></div>
+    <div class="step">
+      <div class="step-circle done" id="step-it">✓</div>
+      <div class="step-label done">IT Provisioning</div>
+    </div>
+    <div class="connector done" id="conn-2"></div>
+    <div class="step">
+      <div class="step-circle active" id="step-training">⚙</div>
+      <div class="step-label active">Training</div>
+    </div>
+    <div class="connector" id="conn-3"></div>
+    <div class="step">
+      <div class="step-circle pending" id="step-manager">4</div>
+      <div class="step-label pending">Manager Handoff</div>
+    </div>
+  </div>
+</div>
+
+<!-- Metric Cards -->
+<div class="grid-4">
+  <div class="metric">
+    <div class="label">Hires This Week</div>
+    <div class="value blue" id="hires-count">3</div>
+  </div>
+  <div class="metric">
+    <div class="label">Completed</div>
+    <div class="value green" id="completed-count">1</div>
+  </div>
+  <div class="metric">
+    <div class="label">Tool Calls Made</div>
+    <div class="value purple" id="tool-calls">24</div>
+  </div>
+  <div class="metric">
+    <div class="label">Avg Duration</div>
+    <div class="value" id="avg-duration">47s</div>
+  </div>
+</div>
+
+<div class="two-col">
+  <!-- New Hire Queue -->
+  <div class="card">
+    <h2>New Hire Queue</h2>
+    <div id="hire-list">
+      <div class="hire-card selected" onclick="selectHire(0)">
+        <div class="avatar">GM</div>
+        <div class="hire-info">
+          <div class="hire-name">Geesh Mamidi</div>
+          <div class="hire-role">Software Engineer · Engineering</div>
+        </div>
+        <span class="status-badge active">In Progress</span>
+      </div>
+      <div class="hire-card" onclick="selectHire(1)">
+        <div class="avatar" style="background:#805ad5">AC</div>
+        <div class="hire-info">
+          <div class="hire-name">Alice Chen</div>
+          <div class="hire-role">Data Analyst · Data & Analytics</div>
+        </div>
+        <span class="status-badge complete">Complete</span>
+      </div>
+      <div class="hire-card" onclick="selectHire(2)">
+        <div class="avatar" style="background:#38a169">BT</div>
+        <div class="hire-info">
+          <div class="hire-name">Bob Torres</div>
+          <div class="hire-role">UX Designer · Design</div>
+        </div>
+        <span class="status-badge pending">Queued</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity Timeline -->
+  <div class="card">
+    <h2>Activity Feed</h2>
+    <ul class="timeline" id="timeline">
+      <li>
+        <div class="tl-icon green">✓</div>
+        <div class="tl-content">
+          <div class="tl-title">HR record created · EMP-4F2A1B</div>
+          <div class="tl-time">2 min ago · hris_create_employee</div>
+        </div>
+      </li>
+      <li>
+        <div class="tl-icon green">✓</div>
+        <div class="tl-content">
+          <div class="tl-title">Compliance docs sent to geeshithamamidi@gmail.com</div>
+          <div class="tl-time">2 min ago · email_send_document · 4 docs</div>
+        </div>
+      </li>
+      <li>
+        <div class="tl-icon blue">✓</div>
+        <div class="tl-content">
+          <div class="tl-title">Corporate email provisioned · geesh.mamidi@company.com</div>
+          <div class="tl-time">1 min ago · it_create_email</div>
+        </div>
+      </li>
+      <li>
+        <div class="tl-icon blue">✓</div>
+        <div class="tl-content">
+          <div class="tl-title">GitHub added to eng-general, product</div>
+          <div class="tl-time">1 min ago · it_provision_github · @geesh-mamidi</div>
+        </div>
+      </li>
+      <li>
+        <div class="tl-icon blue">✓</div>
+        <div class="tl-content">
+          <div class="tl-title">Slack provisioned · #engineering, #general, #deploys</div>
+          <div class="tl-time">1 min ago · it_provision_slack</div>
+        </div>
+      </li>
+      <li>
+        <div class="tl-icon purple">⚙</div>
+        <div class="tl-content">
+          <div class="tl-title">Training curriculum building... (Gemini 1.5 Pro)</div>
+          <div class="tl-time">Now · training_get_catalog</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Provisioned Access Summary -->
+<div class="card">
+  <h2>Provisioned Access — Geesh Mamidi</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>System</th>
+        <th>Account / Access</th>
+        <th>Status</th>
+        <th>Zero Ambient Auth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>HRIS</td>
+        <td>EMP-4F2A1B · full_time · Engineering</td>
+        <td><span class="tag green">✓ Created</span></td>
+        <td><span class="tag green">HR only</span></td>
+      </tr>
+      <tr>
+        <td>Corporate Email</td>
+        <td>geesh.mamidi@company.com · 50GB</td>
+        <td><span class="tag green">✓ Active</span></td>
+        <td><span class="tag green">IT only</span></td>
+      </tr>
+      <tr>
+        <td>GitHub</td>
+        <td>@geesh-mamidi · member · eng-general, product</td>
+        <td><span class="tag green">✓ Member</span></td>
+        <td><span class="tag green">IT only</span></td>
+      </tr>
+      <tr>
+        <td>Slack</td>
+        <td>UA4F5G6H7 · #engineering, #general, #deploys</td>
+        <td><span class="tag green">✓ Active</span></td>
+        <td><span class="tag green">IT only</span></td>
+      </tr>
+      <tr>
+        <td>Licenses</td>
+        <td>GitHub Pro, VSCode (via License Server), Jira</td>
+        <td><span class="tag green">✓ Assigned</span></td>
+        <td><span class="tag green">IT only</span></td>
+      </tr>
+      <tr>
+        <td>Training LMS</td>
+        <td>8 courses · 6 pending · 0 complete</td>
+        <td><span class="tag" style="background:#bee3f8;color:#2b6cb0;">⚙ In Progress</span></td>
+        <td><span class="tag green">Training only</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Evaluation Scores -->
+<div class="card">
+  <h2>Evaluation-Driven Development — Trajectory Scores</h2>
+  <table>
+    <thead>
+      <tr><th>Skill</th><th>Cases</th><th>Pass Rate</th><th>Score</th><th>Pass-to-K (k=5)</th><th>Status</th></tr>
+    </thead>
+    <tbody id="eval-table">
+      <tr>
+        <td><code>hr-intake</code></td>
+        <td>3/3</td>
+        <td>
+          <div class="score-bar"><div class="score-fill" style="width:100%;background:#38a169;"></div></div>
+          100%
+        </td>
+        <td>0.97</td>
+        <td>0.85</td>
+        <td><span class="tag green">Production Ready</span></td>
+      </tr>
+      <tr>
+        <td><code>it-provisioning</code></td>
+        <td>3/3</td>
+        <td>
+          <div class="score-bar"><div class="score-fill" style="width:100%;background:#38a169;"></div></div>
+          100%
+        </td>
+        <td>0.94</td>
+        <td>0.73</td>
+        <td><span class="tag green">Production Ready</span></td>
+      </tr>
+      <tr>
+        <td><code>training-assignment</code></td>
+        <td>2/3</td>
+        <td>
+          <div class="score-bar"><div class="score-fill" style="width:66%;background:#d69e2e;"></div></div>
+          67%
+        </td>
+        <td>0.78</td>
+        <td>0.13</td>
+        <td><span class="tag" style="background:#feebc8;color:#92400e;">Draft Tier</span></td>
+      </tr>
+      <tr>
+        <td><code>manager-handoff</code></td>
+        <td>—</td>
+        <td><div class="score-bar"></div> Pending</td>
+        <td>—</td>
+        <td>—</td>
+        <td><span class="tag" style="background:#edf2f7;color:#718096;">Not Run</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#718096;margin-top:10px;">
+    Trajectory scoring (Day 3): 60% weight on tool call sequence · 40% on output schema.
+    Pass-to-K requires p^5 ≥ 0.50 for production promotion.
+  </p>
+</div>
+
+<!-- Context Engineering Breakdown -->
+<div class="card">
+  <h2>Context Engineering — Active Context Budget</h2>
+  <table>
+    <thead><tr><th>Context Type</th><th>Source</th><th>Tokens</th><th>Mode</th></tr></thead>
+    <tbody>
+      <tr><td>Instructions</td><td>agents.md (global)</td><td>~420</td><td>Static (always loaded)</td></tr>
+      <tr><td>Knowledge</td><td>Active skill.md</td><td>~680</td><td>Progressive — loaded on demand</td></tr>
+      <tr><td>Memory</td><td>message_bus/*.json</td><td>~310</td><td>File bus — URI only in context</td></tr>
+      <tr><td>Examples</td><td>evals/cases.json</td><td>0</td><td>Load at eval time only</td></tr>
+      <tr><td>Tools</td><td>Active skill allowed list</td><td>~180</td><td>Progressive — 3-4 tools at a time</td></tr>
+      <tr><td>Guardrails</td><td>Embedded in skill.md</td><td>~120</td><td>Static per skill</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#718096;margin-top:10px;">
+    Total active context: ~1,710 tokens vs ~15,000 if all skills loaded at once.
+    Progressive disclosure achieves ~88% context reduction (Day 3 concept).
+  </p>
+</div>
+
+<script>
+const hires = [
+  { name: "Geesh Mamidi", initials: "GM", role: "Software Engineer", dept: "Engineering", status: "active",
+    steps: ["done","done","active","pending"] },
+  { name: "Alice Chen", initials: "AC", role: "Data Analyst", dept: "Data & Analytics", status: "complete",
+    steps: ["done","done","done","done"] },
+  { name: "Bob Torres", initials: "BT", role: "UX Designer", dept: "Design", status: "pending",
+    steps: ["pending","pending","pending","pending"] }
+];
+
+const stepIds = ["step-hr","step-it","step-training","step-manager"];
+const connIds = ["conn-1","conn-2","conn-3"];
+
+function selectHire(idx) {
+  document.querySelectorAll(".hire-card").forEach((c,i) => c.classList.toggle("selected", i===idx));
+  const hire = hires[idx];
+  document.getElementById("hire-name-title").textContent = hire.name;
+  hire.steps.forEach((state, i) => {
+    const el = document.getElementById(stepIds[i]);
+    el.className = "step-circle " + state;
+    el.textContent = state === "done" ? "✓" : state === "active" ? "⚙" : (i+1).toString();
+    el.nextElementSibling.className = "step-label " + state;
+    if (i < connIds.length) {
+      document.getElementById(connIds[i]).className = "connector " + (state === "done" ? "done" : "");
+    }
+  });
+}
+
+// Simulate live activity ticker
+let tickerItems = [
+  "training_assign_course (COMP-001) → assigned",
+  "training_assign_course (COMP-002) → assigned",
+  "training_assign_course (ENG-101) → assigned",
+  "calendar_schedule_session → Day-1 welcome scheduled",
+  "training_assign_course (ENG-102) → assigned",
+  "email_send_document → Learning plan sent",
+];
+let tickIdx = 0;
+function addTick() {
+  if (tickIdx >= tickerItems.length) return;
+  const tl = document.getElementById("timeline");
+  const li = document.createElement("li");
+  li.innerHTML = `<div class="tl-icon purple">✓</div>
+    <div class="tl-content">
+      <div class="tl-title">${tickerItems[tickIdx]}</div>
+      <div class="tl-time">Just now</div>
+    </div>`;
+  tl.insertBefore(li, tl.children[tl.children.length - 1]);
+  const counter = document.getElementById("tool-calls");
+  counter.textContent = parseInt(counter.textContent) + 1;
+  tickIdx++;
+  if (tickIdx === tickerItems.length) {
+    // Training done — update pipeline
+    document.getElementById("step-training").className = "step-circle done";
+    document.getElementById("step-training").textContent = "✓";
+    document.getElementById("conn-3").className = "connector done";
+    document.getElementById("step-manager").className = "step-circle active";
+    document.getElementById("step-manager").textContent = "⚙";
+  }
+}
+setInterval(addTick, 2200);
+</script>
+</body>
+</html>
