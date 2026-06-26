@@ -1,10 +1,10 @@
 {
   "skill": "manager-handoff",
   "status": "success",
-  "employee_id": "EMP-F01FBEA4",
+  "employee_id": "EMP-66C48C57",
   "full_name": "Geesh Mamidi",
   "onboarding_complete": true,
-  "completed_at": "2026-06-26T14:30:58.084929",
+  "completed_at": "2026-06-26T15:55:54.572542",
   "summary": {
     "hr_record_created": true,
     "accounts_provisioned": [

@@ -4,7 +4,7 @@
     "tool": "hris_get_departments",
     "params": {},
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.081774"
+    "timestamp": "2026-06-26T15:55:54.568715"
   },
   {
     "skill": "hr",
@@ -20,7 +20,7 @@
       "compensation": 130000.0
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.081846"
+    "timestamp": "2026-06-26T15:55:54.568766"
   },
   {
     "skill": "hr",
@@ -37,36 +37,36 @@
       "deadline": "2026-07-07"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.082874"
+    "timestamp": "2026-06-26T15:55:54.569699"
   },
   {
     "skill": "it",
     "tool": "it_create_email",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "corporate_email": "geesh.mamidi@company.com"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083488"
+    "timestamp": "2026-06-26T15:55:54.570813"
   },
   {
     "skill": "it",
     "tool": "it_provision_github",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "teams": [
         "eng-general",
         "product"
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083511"
+    "timestamp": "2026-06-26T15:55:54.570843"
   },
   {
     "skill": "it",
     "tool": "it_provision_slack",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "corporate_email": "geesh.mamidi@company.com",
       "channels": [
         "#engineering",
@@ -75,13 +75,13 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083533"
+    "timestamp": "2026-06-26T15:55:54.570868"
   },
   {
     "skill": "it",
     "tool": "it_assign_licenses",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "license_list": [
         "GitHub Pro",
         "VSCode",
@@ -89,102 +89,102 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083548"
+    "timestamp": "2026-06-26T15:55:54.570883"
   },
   {
     "skill": "training",
     "tool": "training_get_catalog",
     "params": {},
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083849"
+    "timestamp": "2026-06-26T15:55:54.571435"
   },
   {
     "skill": "training",
     "tool": "training_assign_course",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "course_id": "COMP-001",
       "deadline": "2026-07-13"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083896"
+    "timestamp": "2026-06-26T15:55:54.571495"
   },
   {
     "skill": "training",
     "tool": "training_assign_course",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "course_id": "COMP-002",
       "deadline": "2026-07-15"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083912"
+    "timestamp": "2026-06-26T15:55:54.571515"
   },
   {
     "skill": "training",
     "tool": "training_assign_course",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "course_id": "COMP-003",
       "deadline": "2026-07-15"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083925"
+    "timestamp": "2026-06-26T15:55:54.571529"
   },
   {
     "skill": "training",
     "tool": "training_assign_course",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "course_id": "COMP-004",
       "deadline": "2026-07-17"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083940"
+    "timestamp": "2026-06-26T15:55:54.571545"
   },
   {
     "skill": "training",
     "tool": "training_assign_course",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "course_id": "ENG-101",
       "deadline": "2026-07-20"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083952"
+    "timestamp": "2026-06-26T15:55:54.571557"
   },
   {
     "skill": "training",
     "tool": "training_assign_course",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "course_id": "ENG-102",
       "deadline": "2026-07-23"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083963"
+    "timestamp": "2026-06-26T15:55:54.571568"
   },
   {
     "skill": "training",
     "tool": "training_assign_course",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "course_id": "ENG-103",
       "deadline": "2026-07-26"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083974"
+    "timestamp": "2026-06-26T15:55:54.571577"
   },
   {
     "skill": "training",
     "tool": "training_assign_course",
     "params": {
-      "employee_id": "EMP-F01FBEA4",
+      "employee_id": "EMP-66C48C57",
       "course_id": "ENG-201",
       "deadline": "2026-07-29"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.083985"
+    "timestamp": "2026-06-26T15:55:54.571622"
   },
   {
     "skill": "training",
@@ -198,7 +198,7 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084002"
+    "timestamp": "2026-06-26T15:55:54.571645"
   },
   {
     "skill": "training",
@@ -212,7 +212,7 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084019"
+    "timestamp": "2026-06-26T15:55:54.571664"
   },
   {
     "skill": "training",
@@ -226,7 +226,7 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084035"
+    "timestamp": "2026-06-26T15:55:54.571680"
   },
   {
     "skill": "training",
@@ -237,7 +237,7 @@
       "body": "Welcome! Here is your personalized 8-course curriculum."
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084051"
+    "timestamp": "2026-06-26T15:55:54.571696"
   },
   {
     "skill": "manager",
@@ -252,7 +252,7 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084729"
+    "timestamp": "2026-06-26T15:55:54.572414"
   },
   {
     "skill": "manager",
@@ -267,7 +267,7 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084771"
+    "timestamp": "2026-06-26T15:55:54.572437"
   },
   {
     "skill": "manager",
@@ -282,7 +282,7 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084797"
+    "timestamp": "2026-06-26T15:55:54.572453"
   },
   {
     "skill": "manager",
@@ -297,7 +297,7 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084818"
+    "timestamp": "2026-06-26T15:55:54.572467"
   },
   {
     "skill": "manager",
@@ -312,7 +312,7 @@
       ]
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084841"
+    "timestamp": "2026-06-26T15:55:54.572483"
   },
   {
     "skill": "manager",
@@ -323,7 +323,7 @@
       "sender_name": "Onboarding Bot"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084870"
+    "timestamp": "2026-06-26T15:55:54.572502"
   },
   {
     "skill": "manager",
@@ -334,7 +334,7 @@
       "sender_name": "Onboarding Bot"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084892"
+    "timestamp": "2026-06-26T15:55:54.572518"
   },
   {
     "skill": "manager",
@@ -345,6 +345,6 @@
       "body": "Hi,\n\nGeesh Mamidi joins as Software Engineer on 2026-07-10.\nCorporate email: geesh.mamidi@company.com\nGitHub: @geesh-mamidi\n\n30-60-90 plan attached. 8 courses assigned.\n\nGood luck!"
     },
     "success": true,
-    "timestamp": "2026-06-26T14:30:58.084915"
+    "timestamp": "2026-06-26T15:55:54.572533"
   }
 ]
