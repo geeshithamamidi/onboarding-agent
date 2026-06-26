@@ -38,6 +38,11 @@ Then open `dashboard/dashboard.html` in your browser to see the A2UI live dashbo
 
 ---
 
+## Video Overview
+
+I have made a YouTube video which describes this project: [Watch on YouTube](https://youtu.be/nhG5LIWJ6FU)
+
+
 ## Architecture
 
 ```
